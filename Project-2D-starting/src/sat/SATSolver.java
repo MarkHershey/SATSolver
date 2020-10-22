@@ -67,9 +67,11 @@ public class SATSolver {
             }
         }
 
+        // make sure always pick one of the smallest clause
         for (Clause thisClause : clauses){
             if (thisClause.size() == smallestClauseSize){
                 chosenClause = thisClause;
+                // break after found one of the minimum 
                 break;
             }
         }

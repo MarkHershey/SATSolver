@@ -2,6 +2,8 @@ package sat;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /*
 import static org.junit.Assert.*;
@@ -22,8 +24,7 @@ public class SATSolverTest {
     Literal nc = c.getNegation();
 
     public static void main(String[] args) throws Exception {
-        // String cnfFilePath = args[0];
-        String cnfFilePath = "/home/mark/CODE/fuckSATSolver/Project-2D-starting/testCases/adder_latest.cnf";
+        String cnfFilePath = args[0];
         BufferedReader buffer;
         Formula ClauseFormula = new Formula();
         Clause IndividualClause = new Clause();
@@ -40,9 +41,8 @@ public class SATSolverTest {
                 if (line.length() == 0) continue;
 
                 String[] tokens = line.split(" ");
-                if (tokens[0].equals("c")){
-                    continue;
-                } else if (tokens[0].equals("p")){
+                if (tokens[0].equals("c")) continue;
+                if (tokens[0].equals("p")){
                     // correctSize = Integer.parseInt(tokens[3]);
                     continue;
                 }
@@ -79,8 +79,21 @@ public class SATSolverTest {
         // }
 
         Environment env = SATSolver.solve(ClauseFormula);
-        if (env == null) System.out.println("not satisfiable");
-        else System.out.println(env);
+        if (env == null){
+            System.out.println("Not satisfiable");
+        } 
+        else {
+            System.out.println("Satisfiable");
+            try {
+                FileWriter myWriter = new FileWriter("BoolAssignment.txt");
+                myWriter.write((env.toString()));
+                myWriter.close();
+                System.out.println("Successfully exported solution: BoolAssignment.txt");
+              } catch (IOException e) {
+                System.out.println("An error occurred while exporting solution.");
+                System.out.println(env);
+              }
+        }
     }
     
 	
