@@ -79,13 +79,13 @@ public class SATSolver {
         // pick the first literal
         Literal chosenLiteral = chosenClause.chooseLiteral();
         if (chosenLiteral instanceof NegLiteral) chosenLiteral = chosenLiteral.getNegation();
-        // try put literal to True
+        // try put positive literal to True
         Environment e = solve(
             substitute(clauses, chosenLiteral), 
             env.putTrue(chosenLiteral.getVariable()));
 
         if (e == null){
-            // try put literal to False
+            // try put negative literal to False
             return solve(
                 substitute(clauses, chosenLiteral.getNegation()), 
                 env.putFalse(chosenLiteral.getVariable()));
@@ -93,7 +93,7 @@ public class SATSolver {
     }
 
     /**
-     * given a thisClause list and literal, produce a new list resulting from
+     * given a clause list and literal, produce a new list resulting from
      * setting that literal to true
      *
      * @param clauses
