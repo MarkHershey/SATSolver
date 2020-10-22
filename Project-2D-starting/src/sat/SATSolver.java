@@ -34,9 +34,6 @@ public class SATSolver {
      *         or null if no such environment exists.
      */
     private static Environment solve(ImList<Clause> clauses, Environment env) {
-        // System.out.println(clauses);
-        // System.out.println(env);
-        // System.out.println("-----------------------------------");
         Clause chosenClause = new Clause();
         int smallestClauseSize = Integer.MAX_VALUE;
         // no clauses, backtrack
@@ -53,7 +50,6 @@ public class SATSolver {
                 if (thisClause.isUnit()){
                     // only one literal in this clause 
                     chosenClause = thisClause;
-                    // System.out.println("chosen clause" + chosenClause);
                     Environment e;
                     ImList<Clause> subClausesList;
                     // get the literal
@@ -66,7 +62,6 @@ public class SATSolver {
                         e = env.putFalse(chosenLiteral.getVariable());
                         subClausesList = substitute(clauses, chosenLiteral);
                     }
-                    // System.out.println(">>> 1");
                     return solve(subClausesList, e);
                 }
             }
@@ -75,7 +70,7 @@ public class SATSolver {
         for (Clause thisClause : clauses){
             if (thisClause.size() == smallestClauseSize){
                 chosenClause = thisClause;
-                // System.out.println("chosen clause2" + chosenClause);
+                break;
             }
         }
 
@@ -83,13 +78,11 @@ public class SATSolver {
         Literal chosenLiteral = chosenClause.chooseLiteral();
         if (chosenLiteral instanceof NegLiteral) chosenLiteral = chosenLiteral.getNegation();
 
-        // System.out.println(">>> 2");
         Environment e = solve(
             substitute(clauses, chosenLiteral), 
             env.put(chosenLiteral.getVariable(), Bool.TRUE));
 
         if (e == null){
-            // System.out.println(">>> 3");
             return solve(
                 substitute(clauses, chosenLiteral.getNegation()), 
                 env.put(chosenLiteral.getVariable(), Bool.FALSE));

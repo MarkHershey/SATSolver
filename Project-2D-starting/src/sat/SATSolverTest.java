@@ -23,7 +23,7 @@ public class SATSolverTest {
 
     public static void main(String[] args) throws Exception {
         // String cnfFilePath = args[0];
-        String cnfFilePath = "/home/mark/CODE/Java-Notebook/2D/Project-2D-starting/testCases/test_2020.cnf";
+        String cnfFilePath = "/home/mark/CODE/fuckSATSolver/Project-2D-starting/testCases/adder_latest.cnf";
         BufferedReader buffer;
         Formula ClauseFormula = new Formula();
         Clause IndividualClause = new Clause();
