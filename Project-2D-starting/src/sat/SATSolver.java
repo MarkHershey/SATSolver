@@ -71,7 +71,7 @@ public class SATSolver {
         for (Clause thisClause : clauses){
             if (thisClause.size() == smallestClauseSize){
                 chosenClause = thisClause;
-                // break after found one of the minimum 
+                // break after found one of the shortest clauses
                 break;
             }
         }
@@ -79,15 +79,16 @@ public class SATSolver {
         // pick the first literal
         Literal chosenLiteral = chosenClause.chooseLiteral();
         if (chosenLiteral instanceof NegLiteral) chosenLiteral = chosenLiteral.getNegation();
-
+        // try put literal to True
         Environment e = solve(
             substitute(clauses, chosenLiteral), 
-            env.put(chosenLiteral.getVariable(), Bool.TRUE));
+            env.putTrue(chosenLiteral.getVariable()));
 
         if (e == null){
+            // try put literal to False
             return solve(
                 substitute(clauses, chosenLiteral.getNegation()), 
-                env.put(chosenLiteral.getVariable(), Bool.FALSE));
+                env.putFalse(chosenLiteral.getVariable()));
         } else return e;
     }
 

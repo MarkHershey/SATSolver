@@ -77,8 +77,16 @@ public class SATSolverTest {
         // } else {
         //     System.out.println(ClauseFormula);
         // }
-
+        
+        // timer 
+        System.out.println("SAT solver starts!!!");
+        long started = System.nanoTime();
+        // solve
         Environment env = SATSolver.solve(ClauseFormula);
+        // timer
+        long timeTaken = System.nanoTime() - started;
+        System.out.println("Time taken: " + timeTaken/1000000.0 + "ms");
+
         if (env == null){
             System.out.println("Not satisfiable");
         } 
@@ -90,7 +98,7 @@ public class SATSolverTest {
                 myWriter.close();
                 System.out.println("Successfully exported solution: BoolAssignment.txt");
               } catch (IOException e) {
-                System.out.println("An error occurred while exporting solution.");
+                System.out.println("An error occurred while writing solution to file.");
                 System.out.println(env);
               }
         }
