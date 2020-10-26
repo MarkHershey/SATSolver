@@ -42,11 +42,11 @@ In the meanwhile, keep track of the minimum size of clause
 (that contains the least number of literals). \\
 \\
 If a unit clause is found, set the literal to True or False such that this clause is True, 
-call $substitute()$ to simplify the clauses, then, recursively call the solver with the new env mapping.\\
+call $substitute()$ to simplify the clauses, then, recursively call the solver with the new env mapping.
+Solver returns the env mapping if a solution is found and returns $null$ if no solution is found.\\
 \\ 
-The solver proceed to Step 2 if no unit clause is found or 
-done checking all unit clause with no solution. 
-But we have got the minimum size of clause. \\
+The solver will proceed to Step 2 if no unit clause is found. 
+But by now we have got the $smallestClauseSize$ as an integer. \\
 \\
 \textbf{Step 2}: We can get a clause that satisfy $clause.size() == smallestClauseSize$
 by traverse through the list of clauses for the second time. 
