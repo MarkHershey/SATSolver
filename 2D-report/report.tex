@@ -62,8 +62,8 @@ if the returned env is $null$, which signifies no solution, we get the negative 
 and set it to False, call $substitute()$ to simplify the clauses, then, 
 recursively call the solver with the new env mapping.\\
 \\
-\textbf{In summary}, the algorithm will try find solution from setting unit clause to True first,
-then, start trying from the shortest clause first, until reaching the last clause.
+\textbf{In summary}, the algorithm will try find a solution from setting unit clause to True. 
+If there is no unit clause, it starts trying from the shortest clause first, until reaching the last clause.
 Whenever a solution is found, the program will return the env that contains the satisfiable solution.
 if no solution is found, the program will be done checking the last clause and return $null$.
 

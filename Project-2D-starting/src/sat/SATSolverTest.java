@@ -5,12 +5,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/*
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-*/
-
 import sat.env.*;
 import sat.formula.*;
 
@@ -28,8 +22,7 @@ public class SATSolverTest {
         BufferedReader buffer;
         Formula ClauseFormula = new Formula();
         Clause IndividualClause = new Clause();
-        // int correctSize = 0;
-
+        
         try {
             FileReader file = new FileReader(cnfFilePath);
             buffer = new BufferedReader(file);
@@ -43,7 +36,6 @@ public class SATSolverTest {
                 String[] tokens = line.split(" ");
                 if (tokens[0].equals("c")) continue;
                 if (tokens[0].equals("p")){
-                    // correctSize = Integer.parseInt(tokens[3]);
                     continue;
                 }
 
@@ -68,15 +60,6 @@ public class SATSolverTest {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-
-        // int actualSize = ClauseFormula.getSize();
-        // if (actualSize != correctSize) {
-        //     System.out.println("correct Size: " + correctSize);
-        //     System.out.println("actual Size: " + actualSize);
-        //     throw new Exception("Problem size does not match with problem line description");
-        // } else {
-        //     System.out.println(ClauseFormula);
-        // }
         
         // timer 
         System.out.println("SAT solver starts!!!");
