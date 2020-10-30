@@ -1,5 +1,6 @@
-from typing import List, Tuple, Dict
 import random
+from typing import List, Tuple, Dict
+
 from cnf_parser import parse_cnf_to_list
 
 

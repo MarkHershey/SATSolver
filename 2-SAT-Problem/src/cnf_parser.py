@@ -1,13 +1,17 @@
 from pathlib import Path
 from typing import List, Tuple
+
 from dgraph import DirectedGraph
+
+Literal = int
+Clause = Tuple[Literal]
 
 
 def construct_implication_graph(cnf: str) -> DirectedGraph:
     cnf = Path(cnf)
     assert cnf.is_file()
 
-    formula: List[Tuple] = parse_cnf_to_list(cnf)
+    formula: List[Clause] = parse_cnf_to_list(cnf)
 
     implication_graph = DirectedGraph()
     for clause in formula:
@@ -18,13 +22,13 @@ def construct_implication_graph(cnf: str) -> DirectedGraph:
     return implication_graph
 
 
-def parse_cnf_to_list(cnf: str) -> List[Tuple]:
+def parse_cnf_to_list(cnf: str) -> List[Clause]:
     cnf = Path(cnf)
     assert cnf.is_file()
     with cnf.open() as f:
         content = f.readlines()
 
-    formula = []
+    formula: List[Clause] = []
     clause = []
     for line in content:
         line = line.strip()
