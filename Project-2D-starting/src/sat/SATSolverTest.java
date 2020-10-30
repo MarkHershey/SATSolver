@@ -18,7 +18,12 @@ public class SATSolverTest {
     Literal nc = c.getNegation();
 
     public static void main(String[] args) throws Exception {
-        String cnfFilePath = args[0];
+        String cnfFilePath;
+        if (args.length != 0) {
+            cnfFilePath = args[0];
+        } else {
+            cnfFilePath = "/home/mark/CODE/fuckSATSolver/2-SAT-Problem/src/sample.cnf";
+        }
         BufferedReader buffer;
         Formula ClauseFormula = new Formula();
         Clause IndividualClause = new Clause();
@@ -76,6 +81,7 @@ public class SATSolverTest {
         else {
             System.out.println("Satisfiable");
             try {
+                System.out.println(env);
                 FileWriter myWriter = new FileWriter("BoolAssignment.txt");
                 myWriter.write((env.toString()));
                 myWriter.close();
