@@ -372,14 +372,14 @@ def randomize_solve(cnf: str):
         max_steps -= 1
         picked_literal = check_assignment(formula, truth_assignment)
         if picked_literal == None:
-            break
+            print("SATISFIABLE")
+            solution = [truth_assignment[i] for i in sorted(list(truth_assignment.keys())) if i > 0]
+            return solution
         else:
             flip_assignment(truth_assignment, picked_literal)
 
-    solution = [
-        truth_assignment[i] for i in sorted(list(truth_assignment.keys())) if i > 0
-    ]
-    return solution
+    print("UNSATISFIABLE")
+    return
 ```
 
 ### Runtime Comparison 
