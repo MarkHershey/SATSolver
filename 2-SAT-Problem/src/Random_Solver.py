@@ -3,6 +3,7 @@ from typing import List, Tuple, Dict
 
 from cnf_parser import parse_cnf_to_list
 
+from markkk.time import timeitprint
 
 def check_assignment(formula: List[Tuple], truth_assignment: Dict):
     for clause in formula:
@@ -20,14 +21,17 @@ def flip_assignment(truth_assignment: Dict, literal):
         truth_assignment[literal] = 0
         truth_assignment[-literal] = 1
 
-
+@timeitprint
 def randomize_solve(cnf: str):
+    number_of_variable = 0
     truth_assignment = {}
     formula: List[Tuple] = parse_cnf_to_list(cnf)
 
     # initialise truth assignment by setting all variable to false
     for clause in formula:
         for literal in clause:
+            if literal not in truth_assignment and -literal not in truth_assignment:
+                number_of_variable += 1
             if literal not in truth_assignment:
                 if literal > 0:
                     truth_assignment[literal] = 0
@@ -35,8 +39,11 @@ def randomize_solve(cnf: str):
                 else:
                     truth_assignment[literal] = 1
                     truth_assignment[-literal] = 0
+    
+    max_steps = 100 * number_of_variable ** 2
 
-    while True:
+    while max_steps >= 0:
+        max_steps -= 1
         picked_literal = check_assignment(formula, truth_assignment)
         if picked_literal == None:
             break
@@ -46,9 +53,10 @@ def randomize_solve(cnf: str):
     solution = [
         truth_assignment[i] for i in sorted(list(truth_assignment.keys())) if i > 0
     ]
-    print(solution)
+    # print(solution)
     return solution
 
 
 if __name__ == "__main__":
-    randomize_solve("/home/mark/CODE/fuckSATSolver/2-SAT-Problem/src/sample.cnf")
+    randomize_solve("sample_1k_SAT.cnf")
+    randomize_solve("sample_1k_UNSAT.cnf")

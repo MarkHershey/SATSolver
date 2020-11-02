@@ -59,6 +59,12 @@ class DirectedGraph:
             return []
 
     def topological_sort(self) -> List[Vertex]:
+        """ 
+        Topological ordering based on DFS assuming the graph is a DAG.
+
+        Returns:
+            A list of vertices in topological order.
+        """
         unvisited = list(self.graph.keys())
         order = []
 

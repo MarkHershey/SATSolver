@@ -4,11 +4,12 @@ from dgraph import DirectedGraph
 from cnf_parser import construct_implication_graph
 from kosaraju import get_strongly_connected_components
 
+from markkk.time import timeitprint
 
 Vertex = int
 StronglyConnectedComponent = List[Vertex]
 
-
+@timeitprint
 def solve(cnf: str) -> List[bool]:
     """
     Linear-time 2-SAT Solver
@@ -47,8 +48,6 @@ def solve(cnf: str) -> List[bool]:
     condensed_graph = DirectedGraph()
     for vertex in scc_assignment.keys():
         self_root = scc_assignment[vertex]
-        if self_root == vertex:
-            continue
         for out_neighbor in graph.out_neighbors(vertex):
             out_root = scc_assignment[out_neighbor]
             if self_root == out_root:
@@ -71,7 +70,7 @@ def solve(cnf: str) -> List[bool]:
         truth_assignment[i] for i in sorted(list(truth_assignment.keys())) if i > 0
     ]
 
-    print(solution)
+    # print(solution)
     return solution
 
 
@@ -80,4 +79,5 @@ if __name__ == "__main__":
 
     sys.setrecursionlimit(10000)
 
-    solve("/home/mark/CODE/fuckSATSolver/2-SAT-Problem/src/sample.cnf")
+    solve("sample_1k_SAT.cnf")
+    solve("sample_1k_UNSAT.cnf")
