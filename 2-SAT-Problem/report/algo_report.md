@@ -17,14 +17,14 @@
 The algorithm that solves the 2-SAT in linear time mainly consist of the following 5 steps, which will be explained in details in the following sections.
 
 1. Parse a 2-SAT file in Conjunctive Normal Form
-2. Construct Implication Graph
+2. Construct the Implication Graph
 3. Find Strongly Connected Components (Kosaraju's algorithm)
-4. Check satisfiability 
+4. Check Satisfiability 
 5. Get a satisfiable solution
 
 ### 1 - Parse a 2-SAT file in Conjunctive Normal Form
 
-**Representation of 2-SAT problem in Python: **
+**Representation of 2-SAT problem in Python:**
 
 ```python
 Literal = int
@@ -85,7 +85,7 @@ Parsing of CNF file takes linear time: O(n)
 
 
 
-### 2 - Construct Implication Graph
+### 2 - Construct the Implication Graph
 
 **Implementation of Directed Graph**
 
@@ -398,9 +398,9 @@ Sample CNF 2:
 - Number of Clauses: 1002
 - Expected Result: **Not Satisfiable**
 
-Machine used for experiment: Intel Cpre i7-9700K (Desktop Ubuntu 18.04)
+Machine used for experiment: Intel Core i7-9700K (Desktop Ubuntu 18.04)
 
 Experimental Runtime Result shown as follow:
 
-![](runtime.jpg)
+![](runtime.png)
 
