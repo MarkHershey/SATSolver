@@ -12,15 +12,19 @@
 
 ---
 
-### Implementation Details 
+Our 2-SAT Solver is fully implemented in Python. Source code available. 
 
-The algorithm that solves the 2-SAT in linear time mainly consist of the following 5 steps, which will be explained in details in the following sections.
+### Implementation Details and Algorithm Analysis 
+
+Our Algorithm solves the 2-SAT problem in linear time, which mainly consists of the following 5 steps:
 
 1. Parse a 2-SAT file in Conjunctive Normal Form
 2. Construct the Implication Graph
-3. Find Strongly Connected Components (Kosaraju's algorithm)
-4. Check Satisfiability 
+3. Find the Strongly Connected Components (Kosaraju's algorithm)
+4. Check the Satisfiability 
 5. Get a satisfiable solution
+
+Each of these steps will be explained in detail in the following sections.
 
 ### 1 - Parse a 2-SAT file in Conjunctive Normal Form
 
@@ -34,13 +38,13 @@ Formula = List[Clause]
 
 Literals:
 
-- Integer `x` represents variable
+- Integer `x` represents a variable
 - Positive Integer -> Positive Literal
 - Negative Integer -> Negation of Literal
 
 Clause:
 
-- Since a Clause in 2-SAT problem always has a length of 2, we let an immutable Tuple containing 2 Integer to represent a Clause.
+- Since every Clause will always has a length of 2, we use the immutable Tuple containing only 2 Integers to represent each Clause.
 
 Formula:
 
@@ -63,14 +67,14 @@ p cnf 4 6
 -1 3 0
 ```
 
-- Comment line starts with `c`  will be ignored during parsing.
-- Problem description line starts with `p` will also be ignored.
-- Any Integer excludes zero represents a Literal.
+- Comment line starting with `c`  will be ignored during parsing.
+- Problem description line starting with `p` will also be ignored.
+- Any Integer excluding zero represents a Literal.
 - `0` represents the termination of a Clause. 
 
 
 
-Parsed CNF problem look like this:
+A parsed CNF problem looks like this:
 
 ```Python
 >>> parse_cnf_to_list(CNF_FILE_PATH)
@@ -81,7 +85,7 @@ Parsed CNF problem look like this:
 
 **Time Complexity:**
 
-Parsing of CNF file takes linear time: O(n)
+The parsing of CNF file takes linear time: O(n)
 
 
 
@@ -89,7 +93,7 @@ Parsing of CNF file takes linear time: O(n)
 
 **Implementation of Directed Graph**
 
-The outermost data structure we use to store a Directed Graph is a hash table. We can visualize the data structure as follow:
+The outermost data structure we used to store a Directed Graph is a hash table. We can visualize the data structure as follows:
 
 ![](directed_graph.jpg)
 
@@ -170,7 +174,7 @@ for vertex in graph.all_vertices():
 	visit(graph, vertex, visited, L)
 ```
 
-The red path below show the order of the visit: 
+The red path below shows the order of the visit: 
 
 ![](scc2.jpg)
 
@@ -218,16 +222,16 @@ The blue path below show the order of the visit:
 
 ![](scc3.jpg)
 
-During this second DFS, each vertex get assigned to a Strongly Connected Component, the root vertex changes only when the traversal jumps back to the list L. We end up with two Strongly Connected Components for this example, and their root vertices are `A` and `E`. 
+During this second DFS, each vertex get assigned to a Strongly Connected Component, the root vertex changes only when the traversal jumps back to the list L. For this example, We end up with two Strongly Connected Components and their root vertices are `A` and `E`. 
 
 **Complexity Analysis:**
 
-- For the Strongly-Connected-Component assignment, we used a hash table so that each assignment and checking whether a vertex has been assigned to a group is done in instant time. 
-- Overall, we basically done linear-time DFS twice, so we visit each vertices and edges in the graph twice. 
+- For the Strongly-Connected-Component assignment, we used a hash table so that each assignment and checking whether a vertex has been assigned to a group is done in constant time. 
+- Overall, the complexity is $O(V+E)$, we basically done linear-time DFS twice, so we visit each vertices and edges in the graph twice. 
 
 ### 4 - Check Satisfiability 
 
-At this point, we have got the Strongly Connected Components, and within each component, every vertex can reach any vertex inside the component. Since the Directed Graph is a Implication Graph that we build earlier to represent the implied relationship between literals if they were to make the clauses True. All the vertices or Literals within a same Strongly Connected Component must share the same truth assignment, whether it is True or False. Hence, we can use this property to find contradiction where a Literal and it negation belongs to the same Strongly Connected Component. If the contradiction is found, the Formula is simply not satisfiable. 
+At this point, we have got the Strongly Connected Components, and within each component, every vertex can reach any vertex inside the component. Since the Directed Graph is a Implication Graph that we build earlier to represent the implied relationship between literals if they were to make the clauses True. All the vertices or Literals within a same Strongly Connected Component must share the same truth assignment, whether it is True or False. Hence, we can use this property to find contradictions where a Literal and it negation belongs to the same Strongly Connected Component. If the contradiction is found, the Formula is simply not satisfiable. 
 
 ```python
 for vertex in scc_assignment.keys():
@@ -250,7 +254,7 @@ At this point, we can confirm that that there is a satisfiable solution, we just
 
 **Construct a condensation graph ($G^{SCC}$) based on Strongly Connected Components ($SCC$)**
 
-To simplify the original Implication Graph into a condensation graph which just left with the root of each Strongly Connected Components and the connections between components. 
+To simplify the original Implication Graph into a condensation graph which is left with only the root of each Strongly Connected Components and the connections between components. 
 
 ```python
 condensed_graph = DirectedGraph()
@@ -269,7 +273,7 @@ If we continue with the example, we have two Strongly Connected Components highl
 
 ![](scc4.jpg)
 
-The resulting condensation graph ($G^{SCC}$) should and must be a Directed Acyclic Graph (DAG) because there is no both-way connection between two Strongly Connected Components.
+The resulting condensation graph ($G^{SCC}$) should and must be a Directed Acyclic Graph (DAG) because there is no both-way connection between the two Strongly Connected Components.
 
 ![](scc5.jpg)
 
@@ -304,18 +308,22 @@ This operation costs `O(n)` time where `n` is the number of Literals.
 
 ### Summary
 
-- Parser: O(n)
+- Parser: $O(n)$
 
-- Solver: O(n)
-  - Construct Implication Graph: O(n)
-  - DFS - Find Strongly Connected Components: O(n)
-  - Check satisfiability: O(n)
+- Solver: $O(n)$
+  - Construct Implication Graph: $O(n)$
+  - DFS - Find Strongly Connected Components: $O(n)$
+  - Check satisfiability: $O(n)$
     - Not satisfiable -> Return
     - Satisfiable -> Get a satisfiable solution
-  - Get a satisfiable solution: O(n)
-    - Construct a condensation graph: O(n)
-    - DFS - Topological Ordering: O(n)
-    - Create Truth Assignments -> Return assignments: O(n)
+  - Get a satisfiable solution: $O(n)$
+    - Construct a condensation graph: $O(n)$
+    - DFS - Topological Ordering: $O(n)$
+    - Create Truth Assignments -> Return assignments: $O(n)$
+
+
+
+This algorithm only works for 2-SAT but not 3-SAT, because we are unable to construct an Implication Graph for 3-SAT problem. Assuming one Literal to True does not imply the truth assignment for the other two Literals within the same Clause, thus, the implication cannot be established.  
 
 
 
@@ -384,7 +392,7 @@ def randomize_solve(cnf: str):
 
 ### Runtime Comparison 
 
-I have created two 2-SAT CNF file for runtime comparison between these two implementation:
+I have created two 2-SAT CNF files for runtime comparison between these two implementation:
 
 Sample CNF 1: 
 
@@ -404,3 +412,4 @@ Experimental Runtime Result shown as follow:
 
 ![](runtime.png)
 
+As the result clearly shown, the randomization solver is not practical for solving 2-SAT problem, especially when it comes to unsatisfiable 2-SAT problems. 
