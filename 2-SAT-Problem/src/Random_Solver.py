@@ -39,7 +39,7 @@ def randomize_solve(cnf: str):
                 else:
                     truth_assignment[literal] = 1
                     truth_assignment[-literal] = 0
-    
+
     max_steps = 100 * number_of_variable ** 2
 
     while max_steps >= 0:
@@ -58,5 +58,5 @@ def randomize_solve(cnf: str):
 
 
 if __name__ == "__main__":
-    randomize_solve("sample_1k_SAT.cnf")
-    randomize_solve("sample_1k_UNSAT.cnf")
+    randomize_solve("CNFs/sample_1k_SAT.cnf")
+    randomize_solve("CNFs/sample_1k_UNSAT.cnf")

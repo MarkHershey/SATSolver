@@ -79,5 +79,5 @@ if __name__ == "__main__":
 
     sys.setrecursionlimit(10000)
 
-    solve("sample_1k_SAT.cnf")
-    solve("sample_1k_UNSAT.cnf")
+    solve("CNFs/sample_1k_SAT.cnf")
+    solve("CNFs/sample_1k_UNSAT.cnf")

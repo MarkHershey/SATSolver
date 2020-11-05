@@ -60,7 +60,5 @@ def parse_cnf_to_list(cnf: str) -> List[Clause]:
 if __name__ == "__main__":
     from pprint import pprint
 
-    g = construct_implication_graph(
-        "/home/mark/CODE/fuckSATSolver/2-SAT-Problem/src/sample.cnf"
-    )
+    g = construct_implication_graph("CNFs/sample_simple_SAT.cnf")
     pprint(g.graph)
