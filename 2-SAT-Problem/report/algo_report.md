@@ -1,18 +1,16 @@
 # 50.004 2D Submission / Group No. 30
 
 - **Daniel Low Yu Hian** (1004372)
-
 - **Sim Jia Ren** (1004401)
-
 - **Sean Gunawan** (1004414)
-
 - **Chan Jun Hern, Cawin** (1004487)
-
 - **Huang He** (1004561)
+
+[TOC]
 
 ---
 
-Our 2-SAT Solver is fully implemented in Python. Source code available. 
+Our 2-SAT Solver is fully implemented in Python. Source code available on [GitHub](https://github.com/MarkHershey/SATSolver/tree/master/2-SAT-Problem/src). 
 
 ### Implementation Details and Algorithm Analysis 
 
@@ -392,7 +390,7 @@ def randomize_solve(cnf: str):
 
 ### Runtime Comparison 
 
-I have created two 2-SAT CNF files for runtime comparison between these two implementation:
+We have created two 2-SAT CNF files for runtime comparison between these two implementation:
 
 Sample CNF 1: 
 
@@ -406,7 +404,7 @@ Sample CNF 2:
 - Number of Clauses: 1002
 - Expected Result: **Not Satisfiable**
 
-Machine used for experiment: Intel Core i7-9700K (Desktop Ubuntu 18.04)
+Machine used for experiment: **Intel Core i7-9700K (Desktop Ubuntu 18.04)**
 
 Experimental Runtime Result shown as follow:
 
